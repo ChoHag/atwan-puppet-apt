@@ -6,7 +6,7 @@
 <%   else                                                           -%>
 <%     @repositories.each do | name |                               -%>
 # <%= name %>
-deb <%= @url %> <%= name %> <% @sections.join(' ') %>
+deb <%= @url %> <%= name %> <%= @sections.join(' ') %>
 <%       if @source then                                            -%>
 deb-src <%= @url %> <%= name %> <%= @sections.join(' ') %>
 <%       end                                                        -%>

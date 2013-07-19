@@ -1,3 +1,5 @@
-class apt::source::collection ($collection) {
-  create_resources('apt::source', $collection)
+class apt::source::collection ($collection = 'UNDEFINED') {
+  if $collection != 'UNDEFINED' {
+    create_resources('apt::source', $collection)
+  }
 }

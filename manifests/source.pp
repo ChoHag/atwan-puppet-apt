@@ -4,10 +4,20 @@ define apt::source(
   $url          = 'UNDEFINED',
   $suite        = 'UNDEFINED',
   $sections     = [ 'main' ],
-  $repositories,
+  $repositories = 'UNDEFINED',
 ) {
-  file { $file:
-    ensure  => file,
-    content => template('apt/sources_list_d.erb');
+  if $repositories
+      and $repositories != 'UNDEFINED'
+      and $repositories != '-' {
+    file { $file:
+      ensure  => file,
+      content => template('apt/sources_list_d.erb'),
+      notify  => Class['apt::update'];
+    }
+  } else {
+    file { $file:
+      ensure  => absent,
+      notify  => Class['apt::update']; # Not technically necessary
+    }
   }
 }

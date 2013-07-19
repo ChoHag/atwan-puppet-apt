@@ -17,6 +17,15 @@ deb-src <%= @url %> <%= name %> <%= @sections.join(' ') %>
 <% -%>
 <% elsif @repositories.is_a? Hash                                   -%>
 <%   @repositories.each_pair do | name, repo |                      -%>
+<%     if defined? repo and repo then                               -%>
+<%       if repo.is_a? String or repo.is_a? Array then              -%>
+<%         repo = { 'sections' => repo }                            -%>
+<%       elsif not repo.is_a? Hash then                             -%>
+<%         fail("Unknown repository data type for #{name}")         -%>
+<%       end                                                        -%>
+<%     else                                                         -%>
+<%       repo = { }                                                 -%>
+<%     end                                                          -%>
 <%     if repo.has_key? 'url' then                                  -%>
 <%       url = repo['url']                                          -%>
 <%     else                                                         -%>
